@@ -14,7 +14,9 @@ Detailed localization result shows the detailed localization accuracy in each nu
 # How to use the code
 
 1. Download the dataset via [ML5G-PS-002](https://challenge.aiforgood.itu.int/match/matchitem/38/) [1]
-2. Run the code "MAIN.py" on python environment
+2. Change the path of dataset in "MAIN.py" (e.g., DATA_PATH)
+3. Install python and required packages. It is highly required to construct CUDA environment because ViT takes time to train/predict.
+4. Run the code "MAIN.py" on python environment
 
 That's all.\
 Note that you can set the RUN MODE if you want to skip some processes
