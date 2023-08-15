@@ -5,11 +5,11 @@ Our numerical results show 79.4\% counting accuracy and 39.7\% localization one 
 
 Below are detailed descriptions of results.\
 Counting result shows the advantage of our proposed frame work with ViT which improves the counting accuracy in comparison with the benchmark solutions when SNR is high (20.9\% of DNN-based [4] or 39.2\% of geometry-based [5][6] to 79.4\% when SNR is 18 dB).\
-![Counting result](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/assets/124618252/3beb4e52-8096-44cd-84c1-dd63f0d425ce)\
+![Counting result](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/assets/124618252/24e4fe7f-670d-4d19-a6e0-1a4250e267ab)\
 Localization result shows the advantage of our proposed frame work with ViT which improves the localization accuracy in comparison with the benchmark solutions especially when SNR is high (2.2\% of DNN-based [4] or 2.7\% of geometry-based [5][6] to 39.7\% when SNR is 18 dB).\
-![Localization result](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/assets/124618252/841aa196-d3ca-4ccd-a01d-dd54772e5820)\
+![Localization result](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/assets/124618252/d882c33f-090e-48a9-b964-a4a5d3117207)\
 Detailed localization result shows the detailed localization accuracy in each number of persons when SNR is 18 dB. Our proposed frame work with ViT achieves more than 76\% or 41\% localization accuracy when number of persons is less than or equals to 3 or 6.\
-![Detailed localization result](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/assets/124618252/2204125d-f0ba-41e7-aa60-ae22656d5794)
+![Detailed localization result](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/assets/124618252/ac158664-180b-4a7a-b376-2bc05d8610f1)
 
 # How to use the code
 
@@ -24,9 +24,9 @@ Note that you can set the RUN MODE if you want to skip some processes
 - FULL_DATA_MODE: Switch whether program load all data
 - TRAIN_MODE: Switch whether ML models will be trained
 Below figure shows an overall flow.\
-![Overall flow](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/assets/124618252/fd82357f-6ac6-40dd-a865-68308248764f)\
+![Overall flow](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/assets/124618252/ab215d57-4c78-423f-8f85-f58e545659d3)\
 Below figure shows an sub flow of each block in the overall flow.\
-![Sub flow](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/assets/124618252/dbfdf84b-9044-4dbd-a8ed-cbb65de02ae8)
+![Sub flow](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/assets/124618252/723c9c18-d092-45a3-b1ae-14282e882e4b)
 
 
 # Repository Overview
