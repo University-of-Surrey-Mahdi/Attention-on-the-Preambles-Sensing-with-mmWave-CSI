@@ -31,19 +31,26 @@ Note that you can set the RUN MODE if you want to skip some processes
 
 
 # Repository Overview
-`MAIN.py`: A main python code for running "Attention on Preambles: Indoor Multi-Object Sensing with IEEE 802.11ay Networks"
+| Name | | Category | Sub category | Description |
+| ----------- | ----------- | ----------- | ----------- | ----------- |
+| `MAIN.py` || Code | Main | A main python code for running "Attention on Preambles: Indoor Multi-Object Sensing with IEEE 802.11ay Networks" |
+| `sub_modules` | `/load_gt.py` | Code | Read | Read the ground truths both of counting and of localization |
+|| `/pre_chest.py` | Code | Pre-process | CH estimation. Raw received signals are transfered to estimated channels $(\boldsymbol{Y} \Rightarrow \hat{\boldsymbol{H}})$ using known transmitted signal $(\boldsymbol{X})$. |
+|| `/tx.mat` | Code | Pre-process | Known transmitted signal $(\boldsymbol{X})$ |
+|| `/pre_doppler.py` | Code | Pre-process | Doppler domain analysis. Estimated channels for consecutive packets (number of packets = 128) are transfered to estimated channels for each velocity $(\hat{\boldsymbol{H}} \Rightarrow \hat{\boldsymbol{H}}_{\textrm{vel}})$. |
+|| `/pre_angle.py` | Code | Pre-process | Angular domain analysis. Estimated channels for each Tx/Rx antenna (number of antennas is 4 for both Tx/Rx) are transfered to estimated channels for each angle $(\hat{\boldsymbol{H}}_{\textrm{vel}} \Rightarrow \hat{\boldsymbol{H}}^{\textrm{a}}_{\textrm{vel}})$. |
+|| `/ml_models.py` | Code | ML | Proposed ML models (CNN and ViT). Output the initial model, train the model, or predict the result with the model. |
+|| `/previousDNN.py` | Code | ML | Previous ML model (DNN). Output the initial model, or counting/localization result (including post-process). Note that training the model is not included because it is built in keras library.|
+|| `/previousGEO.py` | Code | ML | Previous geometry-based algorithm and ML model (SVM). Output the MPC (multi-path components), or counting/localization result (including post-process). |
+|| `/post.py` | Code | Post-process | Proposed post-process algorithm. The predicted results with ML models (CNN and ViT) are transfered to counting/localization result. |
+|| `/report.py` | Code | Report | Evaluate, save, and print the counting/localization result. |
+| `trained_model` || Model  || Pre-trained models are stored |
+| `model` || Model  || Trained models while running the code are stored. This directory is vacant as a default, but it is possible to run the code with test mode if you copy the models stored in `trained_model` here. |
+| `output` || Output  || The output results (.txt) are stored with the format of [ML5G-PS-002](https://challenge.aiforgood.itu.int/match/matchitem/38/) |
+| `README.md` || README  || You are here! |
+| `Spec.pptx` || README  || More detailed explanation of source code |
+|
 
-`sub_modules/XXX`: Sub modules whose functions are called by `MAIN.py`
-
-`trained_model/XXX`: Pre-trained models
-
-`model/XXX`: Temporary directory for storing the trained models when running the code. If you copy the models stored in `trained_model` here, it is possible to run the code with test mode.
-
-`output/XXX`: Temporary directory for storing the output results with the format of  [ML5G-PS-002](https://challenge.aiforgood.itu.int/match/matchitem/38/)
-
-`Code_specification.pptx`: Explanation of Source code
-
-`README.md`: You are here!
 
 # Required python packages
 Please install packages below before running `MAIN.py`
