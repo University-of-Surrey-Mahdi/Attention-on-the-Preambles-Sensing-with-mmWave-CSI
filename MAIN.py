@@ -21,11 +21,13 @@ import sub_modules.ml_models as ml_models
 import sub_modules.previousDNN as previousDNN
 import sub_modules.previousGEO as previousGEO
 import copy
+import tensorflow as tf
 # import required modules to output prediction result
 import sub_modules.post as post
 # import required modules to report
 import sub_modules.report as report
-
+# import required modules to plot
+import matplotlib.pyplot as plt
 
 # dataset path
 DATA_PATH   = "E:/WALDO/PS-002-WALDO-main/dataset/"     # Parent path
@@ -52,8 +54,8 @@ if FULL_DATA_MODE:
 else:
     N_TRAIN = 100  # Number of data in training dataset
     N_VAL = 50  # Number of data in validation dataset
-    EPOCH_FULL = 4  # Number of epoch when learning
-    EPOCH_CURR = 2  # Number of epoch when curriculum learning
+    EPOCH_FULL = 10  # Number of epoch when learning
+    EPOCH_CURR = 10  # Number of epoch when curriculum learning
     SNR_LIST = [-18, 0, 18]  # List of target SNR
 N_L             = 44        # Tap length to represent path delay
 N_RX            = 4         # Number of antennas at RX device (4)
@@ -196,12 +198,12 @@ def ML_Counting_previousDNN_Training(mean_k, model_count_name, h_rad_train, coun
         # train the model
         model_count.fit([h_rad_train], count_array_train, batch_size=32, epochs=200, verbose=0)
         # save the model
-        model_count.save(model_count_name + ".h5", save_format='h5')
+        model_count.save(model_count_name + ".keras")
 
     else:
         # load the model
-        model_count.load_weights(model_count_name + ".h5")
-        
+        model_count = tf.keras.models.load_model(model_count_name + ".keras", compile=False)
+    
     return model_count
 
 
@@ -217,8 +219,8 @@ def ML_Counting_Testing(model_count, h_rad_train, h_rad_val, count_array_val, bs
         Y_pred_c_train      = ml_models.predict_NN(model_count, h_rad_train[N_TRAIN*snr_idx:N_TRAIN*(snr_idx+1),:,:,:,:], bs)
         Y_pred_c            = ml_models.predict_NN(model_count, h_rad_val[N_VAL*snr_idx:N_VAL*(snr_idx+1),:,:,:,:], bs)
         
-        pred_tr_c_train     = post.pred(torch.from_numpy(Y_pred_c_train), torch.from_numpy(count_array_train.sum(axis=1)))
-        pred_tr_c           = post.pred(torch.from_numpy(Y_pred_c), torch.from_numpy(count_array_val.sum(axis=1)))
+        pred_tr_c_train     = post.pred((torch.from_numpy(Y_pred_c_train)).to(device), (torch.from_numpy(count_array_train.sum(axis=1))).to(device))
+        pred_tr_c           = post.pred((torch.from_numpy(Y_pred_c)).to(device), (torch.from_numpy(count_array_val.sum(axis=1))).to(device))
         
         pred_c_train.append( np.argmax(pred_tr_c_train.detach().cpu().numpy(), axis=1) + 1 )
         pred_c.append( np.argmax(pred_tr_c.detach().cpu().numpy(), axis=1) + 1 )
@@ -288,7 +290,7 @@ def ML_Localization_Training(mean_k, model_type, model_localization_name_part, h
 
 
 ###  Function for training previous DNN for counting
-def ML_Localization_previousDNN_Training(mean_k, model_count_name, h_rad_train, location_array_train):
+def ML_Localization_previousDNN_Training(mean_k, model_localization_name, h_rad_train, location_array_train):
     
     # Loading ML model for localization
     model = previousDNN.load_NNweights(mean_k)
@@ -297,11 +299,11 @@ def ML_Localization_previousDNN_Training(mean_k, model_count_name, h_rad_train, 
         # train the model
         model.fit([h_rad_train], location_array_train, batch_size=32, epochs=200, verbose=0)
         # save the model
-        model.save(model_count_name + ".h5", save_format='h5')
-
+        model.save(model_localization_name + ".keras")
+    
     else:
         # load the model
-        model.load_weights(model_count_name + ".h5")
+        model = tf.keras.models.load_model(model_localization_name + ".keras", compile=False)
         
     return model
 
@@ -319,8 +321,8 @@ def ML_Localization_Testing(model_localization_dict, h_rad_train, h_rad_val, pre
         Y_pred_l_train  = ml_models.predict_NN(model_localization_dict[snr_val], h_rad_train[N_TRAIN*snr_idx:N_TRAIN*(snr_idx+1),:,:,:,:], bs)
         Y_pred_l        = ml_models.predict_NN(model_localization_dict[snr_val], h_rad_val[N_VAL*snr_idx:N_VAL*(snr_idx+1),:,:,:,:], bs)
         
-        pred_tr_l_train = post.pred(torch.from_numpy(Y_pred_l_train), pred_c_train[snr_idx])
-        pred_tr_l       = post.pred(torch.from_numpy(Y_pred_l), pred_c[snr_idx])
+        pred_tr_l_train = post.pred((torch.from_numpy(Y_pred_l_train)).to(device), pred_c_train[snr_idx])
+        pred_tr_l       = post.pred((torch.from_numpy(Y_pred_l)).to(device), pred_c[snr_idx])
         
         pred_l_train.append( pred_tr_l_train.detach().cpu().numpy() )
         pred_l.append( pred_tr_l.detach().cpu().numpy() )
@@ -445,3 +447,61 @@ if SOLUTION_MODE["GEO"]:
     # Report accuracy
     c_train_GEO, l_train_GEO, c_val_GEO, l_val_GEO = Report(count_array_train, location_array_ev_train, count_array_val, location_array_ev_val, pred_c_train, pred_l_train, pred_c, pred_l, HP["MT"])
 
+### Graph
+fig = plt.figure(figsize=[30,5])
+ax  = []
+for ax_i in range(1,4):
+    ax.append(fig.add_subplot(1,3,ax_i))
+
+# Counting Accuracy
+if SOLUTION_MODE["ViT"]:
+    ax[0].plot(SNR_LIST, c_val_ViT, 'bo-', label='proposed (ViT)')
+if SOLUTION_MODE["CNN"]:
+    ax[0].plot(SNR_LIST, c_val_CNN, 'ro-',  label='proposed (CNN)')
+if SOLUTION_MODE["DNN"]:
+    ax[0].plot(SNR_LIST, c_val_DNN, 'go--',  label='DNN-based')
+if SOLUTION_MODE["GEO"]:
+    ax[0].plot(SNR_LIST, c_val_GEO, 'yo--',  label='geometry-based')
+ax[0].legend()
+ax[0].set_xlabel('SNR [dB]')
+ax[0].set_ylabel('Counting Accuracy')
+ax[0].set_title('Counting Accuracy')
+ax[0].set_xlim([-20, 20])
+ax[0].set_ylim([0.0, 1.0])
+ax[0].grid(True)
+
+# Localization Accuracy
+if SOLUTION_MODE["ViT"]:
+    ax[1].plot(SNR_LIST, [l_val_ViT[0], l_val_ViT[9], l_val_ViT[18]], 'bo-', label='proposed (ViT)')
+if SOLUTION_MODE["CNN"]:
+    ax[1].plot(SNR_LIST, [l_val_CNN[0], l_val_CNN[9], l_val_CNN[18]], 'ro-',  label='proposed (CNN)')
+if SOLUTION_MODE["DNN"]:
+    ax[1].plot(SNR_LIST, [l_val_DNN[0], l_val_DNN[9], l_val_DNN[18]], 'go--',  label='DNN-based')
+if SOLUTION_MODE["GEO"]:
+    ax[1].plot(SNR_LIST, [l_val_GEO[0], l_val_GEO[9], l_val_GEO[18]], 'yo--',  label='geometry-based')
+ax[1].legend()
+ax[1].set_xlabel('SNR [dB]')
+ax[1].set_ylabel('Localization Accuracy')
+ax[1].set_title('Localization Accuracy')
+ax[1].set_xlim([-20, 20])
+ax[1].set_ylim([0.0, 0.5])
+ax[1].grid(True)
+
+# Localization Accuracy for each number of persons at SNR=18dB
+if SOLUTION_MODE["ViT"]:
+    ax[2].plot(list(range(1,9)), l_val_ViT[19:27], 'bo-', label='proposed (ViT)')
+if SOLUTION_MODE["CNN"]:
+    ax[2].plot(list(range(1,9)), l_val_CNN[19:27], 'ro-',  label='proposed (CNN)')
+if SOLUTION_MODE["DNN"]:
+    ax[2].plot(list(range(1,9)), l_val_DNN[19:27], 'go--',  label='DNN-based')
+if SOLUTION_MODE["GEO"]:
+    ax[2].plot(list(range(1,9)), l_val_GEO[19:27], 'yo--',  label='geometry-based')
+ax[2].legend()
+ax[2].set_xlabel('number of persons')
+ax[2].set_ylabel('Localization Accuracy')
+ax[2].set_title('Details of Localization Accuracy (SNR=18dB)')
+ax[2].set_xlim([1,8])
+ax[2].set_ylim([0.0, 1.0])
+ax[2].grid(True)
+
+plt.show()

@@ -10,7 +10,8 @@ from sklearn.svm import SVC
 import torch
 # import required modules to output prediction result
 import sub_modules.post as post
-
+# define device type
+device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
 THRESHOLD   = 2
 CLUSTERING  = 2
@@ -375,7 +376,7 @@ def detect_position(L_trval, reg, pred_c):
         for i in range(1,(MAX_SECTOR+1)):
             pred_localization[i-1] = sector[sector[:,0] == i][:,1].sum() / sector[:,1].sum()
 
-        pred_tr_l       = post.pred(torch.from_numpy(np.array([pred_localization])), torch.from_numpy(np.array([pred_c[ii]])))[0]
+        pred_tr_l       = post.pred((torch.from_numpy(np.array([pred_localization]))).to(device), (torch.from_numpy(np.array([pred_c[ii]]))).to(device))[0]
         
         # swap (A<=>C, D<=>F, G<=>I) randomly
         pred_tr_l       = pred_tr_l.detach().cpu().numpy()

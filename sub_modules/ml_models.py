@@ -220,7 +220,7 @@ def init_NN(MEAN_K, num_all, num_neu, model_type):
 
 
 def train_NN(model, h_rad_train, count_array_train, gt_array_train, h_rad_val, count_array_val, gt_array_val, N_EPOCH, LEARNING_RATE, WEIGHT_DECAY, batch_size):
-    
+
     post.set_param(NUM_ALL, NUM_NEU)
     global BATCH_SIZE
     BATCH_SIZE          = batch_size
@@ -331,10 +331,11 @@ def train_NN(model, h_rad_train, count_array_train, gt_array_train, h_rad_val, c
             pred_y = model(t_X_train_local)    # predicted value
             
             pred_acc = post.pred(pred_y, t_c_train_local)
-            
-            acc = torch.matmul((t_count_train_local+1).type(torch.FloatTensor),(pred_acc == t_y_train_local).all(1).type(torch.FloatTensor))
-            acc_Pn = t_y_train_local.sum()
-            
+
+            acc = torch.matmul(t_count_train_local.type(torch.FloatTensor),
+                                   (pred_acc == t_y_train_local).all(1).type(torch.FloatTensor))
+            acc_Pn = t_count_train_local.sum()
+
             # calculate loss and gradient
             # Due to the fact that loss function is not a library-based one, do not calculate backward when catching the error.
             my_optim.zero_grad()                        # initialize loss with 0
@@ -351,7 +352,7 @@ def train_NN(model, h_rad_train, count_array_train, gt_array_train, h_rad_val, c
                 total_train_n   += 1                # cummulative count
             
             except:
-                print("caution: skip the backward function because of loss error")
+                print("CAUTION: skip the backward function because of loss error")
         
         model.eval() # validation mode
         with torch.no_grad():
@@ -370,10 +371,11 @@ def train_NN(model, h_rad_train, count_array_train, gt_array_train, h_rad_val, c
                         pred_y = model(t_X_valid_local)    # predicted value
                         
                         pred_acc = post.pred(pred_y, t_c_valid_local)
-                        
-                        val_acc = torch.matmul((t_count_valid_local+1).type(torch.FloatTensor),(pred_acc == t_y_valid_local).all(1).type(torch.FloatTensor))
-                        val_acc_Pn = t_y_valid_local.sum()
-                        
+
+                        val_acc = torch.matmul(t_count_valid_local.type(torch.FloatTensor),
+                                           (pred_acc == t_y_valid_local).all(1).type(torch.FloatTensor))
+                        val_acc_Pn = t_count_valid_local.sum()
+
                         # calculate loss only
                         try:
                             val_loss = torch.mean(t_count_valid_local * torch.sum(- t_yPD_valid_local * torch.log((torch.nn.functional.softmax(pred_y, dim=1))) , 1) / NUM_NEU)
@@ -385,7 +387,7 @@ def train_NN(model, h_rad_train, count_array_train, gt_array_train, h_rad_val, c
                             total_valid_n[count_idx][snr_idx]      += 1                    # cummulative count
                         
                         except:
-                            pass
+                            print("CAUTION: skip the backward function because of loss error (test)")
         
         # Calculate mean value for cumulative value with mini batch units
         avg_loss = total_loss / total_train_n           # average loss for training data
@@ -402,16 +404,40 @@ def train_NN(model, h_rad_train, count_array_train, gt_array_train, h_rad_val, c
                             
         # Report
         if (epoch+1) % 10 == 0:
-            print(f'[Epoch {epoch+1:3d}/{N_EPOCH:3d}]' \
+
+            val_loss_report = []
+            val_acc_report  = []
+            for snr_idx in range(3):
+                loss_local      = 0.0
+                loss_local_n    = 0.0
+                acc_local       = 0.0
+                acc_local_Pn    = 0.0
+                for count_idx in range(8):
+                    loss_local      += total_val_loss[count_idx][snr_idx]
+                    loss_local_n    += total_valid_n[count_idx][snr_idx]
+                    acc_local       += total_val_acc[count_idx][snr_idx]
+                    acc_local_Pn    += total_valid_Pn[count_idx][snr_idx]
+                val_loss_report.append(loss_local / loss_local_n)
+                val_acc_report.append(acc_local / acc_local_Pn)
+
+            print(f'[Epoch {epoch+1:3d}/{N_EPOCH:3d}]'\
                   f' loss: {avg_loss:.5f}, acc: {avg_acc:.5f}')
-            for count_idx in range(8): 
-                print(f'N_PERSON = {count_idx+1}' \
+            print(f'For test dataset' \
                   '\n'
-                  f' val_loss(+18): {avg_val_loss[count_idx][2]:.5f}, val_acc(+18): {avg_val_acc[count_idx][2]:.5f}' \
+                  f' val_loss(+18): {val_loss_report[2]:.5f}, val_acc(+18): {val_acc_report[2]:.5f}' \
                   '\n'
-                  f' val_loss(  0): {avg_val_loss[count_idx][1]:.5f}, val_acc(  0): {avg_val_acc[count_idx][1]:.5f}' \
+                  f' val_loss(  0): {val_loss_report[1]:.5f}, val_acc(  0): {val_acc_report[1]:.5f}' \
                   '\n'
-                  f' val_loss(-18): {avg_val_loss[count_idx][0]:.5f}, val_acc(-18): {avg_val_acc[count_idx][0]:.5f}')
+                  f' val_loss(-18): {val_loss_report[0]:.5f}, val_acc(-18): {val_acc_report[0]:.5f}')
+            # Detailed results
+            # for count_idx in range(8):
+            #     print(f'N_PERSON = {count_idx+1}' \
+            #       '\n'
+            #       f' val_loss(+18): {avg_val_loss[count_idx][2]:.5f}, val_acc(+18): {avg_val_acc[count_idx][2]:.5f}' \
+            #       '\n'
+            #       f' val_loss(  0): {avg_val_loss[count_idx][1]:.5f}, val_acc(  0): {avg_val_acc[count_idx][1]:.5f}' \
+            #       '\n'
+            #       f' val_loss(-18): {avg_val_loss[count_idx][0]:.5f}, val_acc(-18): {avg_val_acc[count_idx][0]:.5f}')
         
     return model, train_history, trainacc_history, valid_history, validacc_history
 
