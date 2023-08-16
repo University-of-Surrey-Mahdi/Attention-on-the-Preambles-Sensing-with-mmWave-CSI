@@ -38,10 +38,10 @@ Note that you can set the RUN MODE if you want to skip some processes
 | ----------- | ----------- | ----------- | ----------- | ----------- |
 | `MAIN.py` || Code | Main | A main python code for running "Attention on Preambles: Indoor Multi-Object Sensing with IEEE 802.11ay Networks" |
 | `sub_modules` | `/load_gt.py` | Code | Read | Read the ground truths both of counting and of localization |
-| `sub_modules` | `/pre_chest.py` | Code | Pre-process | CH estimation. Raw received signals are transfered to estimated channels $(\boldsymbol{Y} \Rightarrow \hat{\boldsymbol{H}})$ using known transmitted signal $(\boldsymbol{X})$. |
+| `sub_modules` | `/pre_chest.py` | Code | Pre-process | CH estimation. Raw received signals $(\boldsymbol{Y})$ are transfered to estimated channels $(\Rightarrow \hat{\boldsymbol{H}})$ using known transmitted signal $(\boldsymbol{X})$. |
 | `sub_modules` | `/tx.mat` | Code | Pre-process | Known transmitted signal $(\boldsymbol{X})$ |
-| `sub_modules` | `/pre_doppler.py` | Code | Pre-process | Doppler domain analysis. Estimated channels for consecutive packets (number of packets = 128) are transfered to estimated channels for each velocity $(\hat{\boldsymbol{H}} \Rightarrow \hat{\boldsymbol{H}}_{\textrm{vel}})$.|
-| `sub_modules` | `/pre_angle.py` | Code | Pre-process | Angular domain analysis. Estimated channels for each Tx/Rx antenna (number of antennas is 4 for both Tx/Rx) are transfered to estimated channels for each angle $(\hat{\boldsymbol{H}}_{\textrm{vel}} \Rightarrow$ $\hat{\boldsymbol{H}}_{\textrm{vel}}^{\textrm{a}})$.|
+| `sub_modules` | `/pre_doppler.py` | Code | Pre-process | Doppler domain analysis. Estimated channels for 128 consecutive packets $(\hat{\boldsymbol{H}})$ are transfered to estimated channels for each velocity $(\Rightarrow \hat{\boldsymbol{H}}_{\textrm{vel}})$.|
+| `sub_modules` | `/pre_angle.py` | Code | Pre-process | Angular domain analysis. Estimated channels for 4Tx $\times$ 4Rx antennas $(\hat{\boldsymbol{H}}_{\textrm{vel}})$ are transfered to estimated channels for each angle $(\Rightarrow \hat{\boldsymbol{H}}_{\textrm{vel}}^{\textrm{a}})$.|
 | `sub_modules` | `/ml_models.py` | Code | ML | Proposed ML models (CNN and ViT). Output the initial model, train the model, or predict the result with the model. |
 | `sub_modules` | `/previousDNN.py` | Code | ML | Previous ML model (DNN). Output the initial model, or counting/localization result (including post-process). Note that training the model is not included because it is built in keras library.|
 | `sub_modules` | `/previousGEO.py` | Code | ML | Previous geometry-based algorithm and ML model (SVM). Output the MPC (multi-path components), or counting/localization result (including post-process). |
