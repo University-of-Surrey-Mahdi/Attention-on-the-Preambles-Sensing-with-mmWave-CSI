@@ -38,10 +38,10 @@ VALID_RS    = DATA_PATH + "validation/rxSignal/"        # Received signals of va
 COV_RS      = DATA_PATH + "cov/"                        # Covariance matrices of received signals for LMMSE
 
 # RUN MODE (Default: All True. If you set some modes as False, the process will be skipped.)
-PREPRO_MODE         = False         # If True, pre-process will run. Else, pre-processed data will be loaded.
-PREPRO_SAVE_MODE    = False         # If True AND PREPRO_MODE == True, pre-processed data will be saved. After that, you can set PREPRO_MODE as False (skip pre-process and load the pre-processed data)
+PREPRO_MODE         = True          # If True, pre-process will run. Else, pre-processed data will be loaded.
+PREPRO_SAVE_MODE    = True          # If True AND PREPRO_MODE == True, pre-processed data will be saved. After that, you can set PREPRO_MODE as False (skip pre-process and load the pre-processed data)
 FULL_DATA_MODE      = True          # If False, program runs with small dataset and small epoch. It is worthy if you want to check if program runs without ERROR.
-TRAIN_MODE          = True         # If False, no learning runs, so it just installed pre-learned model.
+TRAIN_MODE          = True          # If False, no learning runs, so it just installed pre-learned model.
 SOLUTION_MODE       = {"ViT": True, "CNN": True, "DNN": True, "GEO": True}  # if True, Program runs for the solution
 
 # Fixed parameters

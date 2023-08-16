@@ -1,17 +1,17 @@
 # Attention on Preambles: Indoor Multi-Object Sensing with IEEE 802.11ay Networks
 The framework for multi-object sensing with communication-centric signals and thus for solving the problem stetement [ITU-ML5G-PS-002: WALDO (Wireless Artificial intelligence Location DetectiOn): sensing using mmWave communications and ML](https://challenge.aiforgood.itu.int/match/matchitem/38/) [1] provided by the ITU AI/ML in 5G Challenge 2021 in collaboration with NIST. Below figure shows an overview of the problem statement. We would like to count the persons in the room and localize/classify them into 9 sectors (A to I) accurately.\
-![Problem statement](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/files/12359954/pdfresizer.com-pdf-crop.pdf)
+![Problem statement](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/assets/124618252/0f8a18f8-ab65-43bf-a3d8-140da052e2fb)
 
 Below figure shows an overall block diagram of the proposed framework which is similar to a previous study [2]. We apply vision transformer (ViT) [3] in the final solution and design the output layer as predicting probability density of human presence in each sector. Furthermore, we pre-process received signals as beams are adjusted for indoor sensing, and apply curriculum learning [4] known to be effective for gradually more complex tasks to train ViT as predicting various SNRs data.\
-![Proposed framework](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/files/12359985/pdfresizer.com-pdf-crop.1.pdf)\
-Below figure explains the design of the output layer as predicting probability density of human presence in each sector.\
-![Output neuron design](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/files/12359994/pdfresizer.com-pdf-crop.2.pdf)
+![Proposed framework](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/assets/124618252/53f4d351-20c2-46db-8ff8-719e0c7a85c6)\
+Below figure explains the design of the output layer. The output layer for counting is a simple classifiey (a) while that for localization predicts probability density of human presence in each sector (b).\
+![Output neuron design](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/assets/124618252/53188f3a-8414-4c25-a2d4-dbd485bc5468)
 
 Our numerical results show 79.4\% counting accuracy and 39.7\% localization one when SNR is 18dB. Below are detailed descriptions of results.\
 The counting result (see figure (a)) shows the advantage of our proposed framework with ViT which improves the counting accuracy in comparison with the benchmark solutions when SNR is high (20.9\% of DNN-based [2] or 39.2\% of geometry-based [5][6] to 79.4\% when SNR is 18 dB).\
 The localization result (see figure (b)) shows the advantage of our proposed framework with ViT which improves the localization accuracy in comparison with the benchmark solutions especially when SNR is high (2.2\% of DNN-based [2] or 2.7\% of geometry-based [5][6] to 39.7\% when SNR is 18 dB).\
 Figure (c) shows the detailed localization accuracy in each number of persons when SNR is 18 dB. Our proposed framework with ViT achieves more than 76\% or 41\% localization accuracy when number of persons is less than or equals to 3 or 6.\
-![Numerical results](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/files/12360006/pdfresizer.com-pdf-crop.3.pdf)
+![Numerical results](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/assets/124618252/6039a079-d793-4411-a75c-d0c6e77d2f58)
 
 # How to use the code
 
@@ -27,7 +27,7 @@ Note that you can set the RUN MODE if you want to skip some processes
 - FULL_DATA_MODE: Switch whether program load all data
 - TRAIN_MODE: Switch whether ML models will be trained
 
-![Flow](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/files/12360034/pdfresizer.com-pdf-crop.4.pdf)
+![Flow](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/assets/124618252/a5331c69-18ff-491d-91a0-97e471f63ed7)
 
 
 # Repository Overview
