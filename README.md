@@ -10,7 +10,7 @@ Our numerical results show 79.4\% counting accuracy and 39.7\% localization one 
 The output layer for counting is a simple classifiey (a) while that for localization predicts probability density of human presence in each sector (b).\
 ![Output neuron design](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/assets/124618252/53188f3a-8414-4c25-a2d4-dbd485bc5468)
 
-> [Details of the design of the numerical results]\
+> [Details of the numerical results]\
 The counting result (see figure (a)) shows the advantage of our proposed framework with ViT which improves the counting accuracy in comparison with the benchmark solutions when SNR is high (20.9\% of DNN-based [2] or 39.2\% of geometry-based [5][6] to 79.4\% when SNR is 18 dB).\
 The localization result (see figure (b)) shows the advantage of our proposed framework with ViT which improves the localization accuracy in comparison with the benchmark solutions especially when SNR is high (2.2\% of DNN-based [2] or 2.7\% of geometry-based [5][6] to 39.7\% when SNR is 18 dB).\
 Figure (c) shows the detailed localization accuracy in each number of persons when SNR is 18 dB. Our proposed framework with ViT achieves more than 76\% or 41\% localization accuracy when number of persons is less than or equals to 3 or 6.\
