@@ -196,7 +196,7 @@ def ML_Counting_previousDNN_Training(mean_k, model_count_name, h_rad_train, coun
     # Train ML for counting
     if TRAIN_MODE:
         # train the model
-        model_count.fit([h_rad_train], count_array_train, batch_size=32, epochs=200, verbose=0)
+        model_count.fit([h_rad_train], np.vstack((count_array_train, count_array_train, count_array_train)), batch_size=32, epochs=200, verbose=0)
         # save the model
         model_count.save(model_count_name + ".keras")
 
@@ -297,7 +297,7 @@ def ML_Localization_previousDNN_Training(mean_k, model_localization_name, h_rad_
     # Train ML for localization
     if TRAIN_MODE:
         # train the model
-        model.fit([h_rad_train], location_array_train, batch_size=32, epochs=200, verbose=0)
+        model.fit([h_rad_train], np.vstack((location_array_train, location_array_train, location_array_train)), batch_size=32, epochs=200, verbose=0)
         # save the model
         model.save(model_localization_name + ".keras")
     
