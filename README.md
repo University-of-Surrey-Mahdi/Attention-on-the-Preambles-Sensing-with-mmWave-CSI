@@ -1,4 +1,4 @@
-# Attention on Preambles: Indoor Multi-Object Sensing with IEEE 802.11ay Networks
+# Attention on the Preamble: Indoor  Multi-Person Sensing with IEEE 802.11ay Signals
 The framework for multi-object sensing with communication-centric signals and thus for solving the problem stetement [ITU-ML5G-PS-002: WALDO (Wireless Artificial intelligence Location DetectiOn): sensing using mmWave communications and ML](https://challenge.aiforgood.itu.int/match/matchitem/38/) [1] provided by the ITU AI/ML in 5G Challenge 2021 in collaboration with NIST. Below figure shows an overview of the problem statement. We would like to count the persons in the room and localize/classify them into 9 sectors (A to I) accurately.\
 ![Problem statement](https://github.com/University-of-Surrey-Mahdi/WiFi-sensing/assets/124618252/0f8a18f8-ab65-43bf-a3d8-140da052e2fb)
 
