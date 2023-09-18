@@ -59,9 +59,9 @@ Please install packages below before running `MAIN.py`
 
 # References
 1) [ML5G-PS-002](https://challenge.aiforgood.itu.int/match/matchitem/38/)
-2) S. Khunteta, A. K. R. Chavva, and A. Agrawal, "AI-based indoor localization using mmWave MIMO channel at 60 GHz," ITU Journal on Future and Evolving Technologies, vol. 3, no. 2, pp. 243-251, 2022.
-3) A. Dosovitskiy, L. Beyer, A. Kolesnikov, D. Weissenborn, X. Zhai, T. Unterthiner, M. Dehghani, M. Minderer, G. Heigold, S. Gelly, J. Uszkoreit, and N. Houlsby, "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale," 2021.
-4)  P. Hanpinitsak, K. Saito, J.-i. Takada, M. Kim, and L. Materum, "Multipath Clustering and Cluster Tracking for Geometry-Based Stochastic Channel Modeling," IEEE Transactions on Antennas and Propagation, vol. 65, no. 11, pp. 6015-6028, 2017.
+2) A. Dosovitskiy, L. Beyer, A. Kolesnikov, D. Weissenborn, X. Zhai, T. Unterthiner, M. Dehghani, M. Minderer, G. Heigold, S. Gelly, J. Uszkoreit, and N. Houlsby, "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale," 2021.
+3) P. Hanpinitsak, K. Saito, J.-i. Takada, M. Kim, and L. Materum, "Multipath Clustering and Cluster Tracking for Geometry-Based Stochastic Channel Modeling," IEEE Transactions on Antennas and Propagation, vol. 65, no. 11, pp. 6015-6028, 2017.
+4)  S. Khunteta, A. K. R. Chavva, and A. Agrawal, "AI-based indoor localization using mmWave MIMO channel at 60 GHz," ITU Journal on Future and Evolving Technologies, vol. 3, no. 2, pp. 243-251, 2022. 
 
 
 # Publication
