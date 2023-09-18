@@ -21,7 +21,7 @@ Note that you can set the RUN MODE if you want to skip some processes
 # Repository Overview
 | Name | (Sub name) | Category | (Sub category) | Description |
 | ----------- | ----------- | ----------- | ----------- | ----------- |
-| `MAIN.py` || Code | Main | A main python code for running "Attention on Preambles: Indoor Multi-Object Sensing with IEEE 802.11ay Networks" |
+| `MAIN.py` || Code | Main | A main python code for running "Attention on the Preamble: Indoor  Multi-Person Sensing with IEEE 802.11ay Signals" |
 | `sub_modules` | `/load_gt.py` | Code | Read | Read the ground truths both of counting and of localization |
 | `sub_modules` | `/pre_chest.py` | Code | Pre-process | CH estimation. Raw received signals $(\boldsymbol{Y})$ are transfered to estimated channels $(\Rightarrow \hat{\boldsymbol{H}})$ using known transmitted signal $(\boldsymbol{X})$. |
 | `sub_modules` | `/tx.mat` | Code | Pre-process | Known transmitted signal $(\boldsymbol{X})$ |
