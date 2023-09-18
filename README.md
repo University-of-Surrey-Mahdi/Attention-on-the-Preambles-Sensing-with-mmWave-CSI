@@ -61,14 +61,12 @@ Please install packages below before running `MAIN.py`
 1) [ML5G-PS-002](https://challenge.aiforgood.itu.int/match/matchitem/38/)
 2) S. Khunteta, A. K. R. Chavva, and A. Agrawal, "AI-based indoor localization using mmWave MIMO channel at 60 GHz," ITU Journal on Future and Evolving Technologies, vol. 3, no. 2, pp. 243-251, 2022.
 3) A. Dosovitskiy, L. Beyer, A. Kolesnikov, D. Weissenborn, X. Zhai, T. Unterthiner, M. Dehghani, M. Minderer, G. Heigold, S. Gelly, J. Uszkoreit, and N. Houlsby, "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale," 2021.
-4) Y. Bengio, J. Louradour, R. Collobert, and J. Weston, "Curriculum Learning," Int. Conf. Mach. Learn., pp. 41-48, 2009.
-5) C. Gustafson, K. Haneda, S. Wyne, and F. Tufvesson, "On mm-Wave Multipath Clustering and Channel Modeling," IEEE Transactions on Antennas and Propagation, vol. 62, no. 3, pp. 1445-1455, 2014.
-6) P. Hanpinitsak, K. Saito, J.-i. Takada, M. Kim, and L. Materum, "Multipath Clustering and Cluster Tracking for Geometry-Based Stochastic Channel Modeling," IEEE Transactions on Antennas and Propagation, vol. 65, no. 11, pp. 6015-6028, 2017.
+4)  P. Hanpinitsak, K. Saito, J.-i. Takada, M. Kim, and L. Materum, "Multipath Clustering and Cluster Tracking for Geometry-Based Stochastic Channel Modeling," IEEE Transactions on Antennas and Propagation, vol. 65, no. 11, pp. 6015-6028, 2017.
 
 
 # Publication
-- Tatsuya Kikuzuki, Mahdi Boloursaz Mashhadi, Yi Ma, and Rahim Tafazolli, "Attention on Preambles: Indoor Multi-Object Sensing with IEEE 802.11ay Networks," IEEE Wireless Communication Letters, in press.
+- Tatsuya Kikuzuki, Mahdi Boloursaz Mashhadi, Yi Ma, and Rahim Tafazolli, "Attention on the Preamble: Indoor  Multi-Person Sensing with IEEE 802.11ay Signals," submitted for publication. 
 
 # Contacts
 - Tatsuya Kikuzuki (FUJITSU LIMITED): kikuzuki{at}fujitsu.com
-- Mahdi Boloursaz Mashhadi (The University of Surrey): m.boloursazmashhadi{at}surrey.ac.uk
+- Dr. Mahdi Boloursaz Mashhadi (The University of Surrey): m.boloursazmashhadi{at}surrey.ac.uk
